@@ -1,0 +1,113 @@
+.custom-marquee__wrapper {
+  grid: auto / auto-flow max-content;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+  overflow: hidden;
+  padding: 40px 0px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    rgba(218, 64, 68, 0.25),
+    rgba(255, 250, 126, 0.25) 30.21%,
+    rgba(218, 64, 68, 0.25) 64.1%,
+    rgba(255, 250, 126, 0.25) 100%
+  );
+}
+
+.custom-marquee__wrapper .custom-marquee__marquee {
+  animation: marquee 40s linear infinite;
+  display: flex;
+  place-items: center;
+}
+
+.custom-marquee__wrapper:hover > * {
+  animation-play-state: paused;
+}
+
+.custom-marquee__wrapper span {
+  float: left;
+  width: 50%;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(calc(-100% * 1));
+  }
+}
+
+.custom-marquee__wrapper svg {
+  width: 30px;
+  height: 30px;
+}
+
+.custom-marquee__item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin: 0 40px;
+  gap: calc(40px * 1 / 2);
+  gap: 20px;
+  line-height: normal;
+  font-size: 35px;
+  color: #000;
+  text-wrap: nowrap;
+}
+
+.custom-marquee__item .button {
+  font-size: 1.6rem;
+  letter-spacing: 0.1rem;
+  line-height: calc(1 + 0.2 / var(--font-body-scale));
+}
+
+.custom-marquee__item .button {
+  overflow: hidden;
+  transition: color 0.7s ease;
+}
+
+.custom-marquee__item .button:hover {
+  color: #fff;
+}
+
+.custom-marquee__item .button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #000;
+  transform: translateX(-100%);
+  transition: transform 0.7s ease;
+  border: none;
+  line-height: normal;
+  border: 1px solid #000;
+  scale: 1.2;
+}
+
+.custom-marquee__item .button:hover::after {
+  transform: translateX(0%);
+}
+
+.custom-marquee__item .button span {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  z-index: 2;
+}
+
+.custom-marquee__item .button--secondary {
+  background-color: transparent;
+  border: 1px solid #000;
+}
+
+.custom-marquee__button {
+  display: flex;
+  align-items: center;
+}
