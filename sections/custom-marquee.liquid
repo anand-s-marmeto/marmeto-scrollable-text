@@ -1,45 +1,50 @@
 {{ 'custom-marquee.css' | asset_url | stylesheet_tag }}
 
-{% style %}
+{%- style -%}
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
   @media screen and (min-width: 750px) {
-    .padding--{{ section.id }} {
+    .section-{{ section.id }} {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
-  .padding--{{ section.id }} {
-    padding-top: {{ section.settings.padding_top | divided_by:2 }}px;
-    padding-bottom: {{ section.settings.padding_bottom |  divided_by: 2 }}px;
-  }
-{% endstyle %}
+{%- endstyle -%}
 
-<marmeto-component-scrollable-text>
-  <div class="custom-marquee padding--{{section.id}}">
-    <div class="custom-marquee__header">
+<marmeto-scrollable-text class="section-{{ section.is }}">
+  <div class="marmeto-scrollable-text">
+    <div class="marmeto-scrollable-text__header">
       {% if section.settings.heading %}
-        <div class="custom-marquee__heading">
+        <div class="marmeto-scrollable-text__heading">
           {{ section.settings.heading }}
         </div>
       {% endif %}
       {% if section.settings.description %}
-        <div class="custom-marquee__description">
+        <div class="marmeto-scrollable-text__description">
           {{ section.settings.description }}
         </div>
       {% endif %}
     </div>
-    <div class="custom-marquee__wrapper">
+    <div class="marmeto-scrollable-text__wrapper">
       {% for i in (1..28) %}
-        <div class="custom-marquee__marquee">
+        <div class="marmeto-scrollable-text__marquee">
           {% for block in section.blocks %}
-            <div class="custom-marquee__item">
-              <div class="custom-marquee__svg">
-                {{ block.settings.svg }}
-              </div>
-              <div class="custom-marquee__text">
-                {{ block.settings.slider_text }}
-              </div>
-              <div class="custom-marquee__button">
-                <a href="{{block.settings.button_url}}" class="button {{block.settings.button_type}}">
+            <div class="marmeto-scrollable-text__item">
+              {% if block.settings.svg %}
+                <div class="marmeto-scrollable-text__svg">
+                  {{ block.settings.svg }}
+                </div>
+              {% endif %}
+              {% if block.settings.slider_text %}
+                <div class="marmeto-scrollable-text__text">
+                  {{ block.settings.slider_text }}
+                </div>
+              {% endif %}
+              <div class="marmeto-scrollable-text__button">
+                <a href="{% if block.settings.button_url %}{{ block.settings.button_url }}{% else %}#{% endif %}" class="button {{block.settings.button_type}}">
                   <span>{{ block.settings.button_label }}</span>
                 </a>
               </div>
@@ -49,7 +54,7 @@
       {% endfor %}
     </div>
   </div>
-</marmeto-component-scrollable-text>
+</marmeto-scrollable-text>
 
 
 {% schema %}
@@ -64,7 +69,8 @@
       {
         "type": "text",
         "id": "heading",
-        "label": "Heading"
+        "label": "Heading",
+        "default":"Heading"
       },
       {
         "type": "richtext",
